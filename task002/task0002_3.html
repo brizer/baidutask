@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<!--最简单的图片轮播-->
+	<!--<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div><img src="img/4.jpg" id="id1"/></div>
+	</body>
+<script type="text/javascript">
+	var arr=new Array();
+	arr[0]="img/4.jpg";
+	arr[1]="img/1.jpg";//放图片地址
+	arr[2]="img/2.jpg";
+	arr[3]="img/3.jpg";
+	var num=0;
+	setInterval(turnpic,1000); //每隔4秒转换图片
+	function turnpic(){
+	  idsrc=document.getElementById("id1");
+	  if(num==arr.length-1)
+	  	num=0;
+	  else
+	  	num+=1;
+	  idsrc.src=arr[num];//通过将src直接转换就能切换图片
+	}
+</script>-->
+
+<!--复杂点的图片轮播-->
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+<style type="text/css">
+.carousel {
+	min-width: 960px;
+} 
+.carousel-indicators{
+	position:absolute;
+	left:50%;
+	top:25%;
+	width:60%;
+	margin-left: -32%;
+	text-align: center;
+	z-index: 15;
+	list-style: none;
+	min-width: 576px;
+}
+.carousel-indicators li{
+	display: inline-block;
+	width:10px;
+	height:10px;
+	margin:1px;
+	border:1px solid #fff;
+	border-radius:10px;
+	background-color:rgba(0,0,0,0);
+}
+.carousel-inner {
+	position:relative;
+	width:960px;
+	height:230px;
+	overflow: hidden;
+	left:50%;
+	margin-left: -480px;
+}
+.item {
+	text-align: center;
+	position:relative;
+}
+
+</style>
+	</head>
+	<body>
+		<div class="carousel slide" id="myCarousel">
+			<ol class="carousel-indicators">
+				<li></li>
+				<li></li>
+				<li></li>
+			</ol>
+			<div class="carousel-inner">
+				<div class="item" id="item1">
+					<img src="img/1.jpg"/>
+				</div>
+				<div class="item" id="item2">
+					<img src="img/2.jpg"/>
+				</div>
+				<div class="item" id="item3">
+					<img src="img/3.jpg"/>
+				</div>
+			</div>
+		</div>
+	</body>
+<script type="text/javascript">
+	var time=1000;//定义间隔时间
+	var imgs=document.getElementsByClassName('item');
+//	先将其他图片隐藏
+	for(var i=1;i<imgs.length;i++){
+		//imgs[i].style.display="none";
+		imgs[i].style.left=(960*i)+"px";
+		imgs[i].style.top=(-234*i)+"px";
+	}
+	function leftmove(){
+		//将右边一个往左移动
+		for(var i=0;i<imgs.length;i++){
+			var leftone = imgs[i].style.left;
+			leftone = leftone.replace("px",'');
+			var leftoneNum=Number(leftone);
+			leftoneNum-=10;
+			imgs[i].style.left=leftoneNum+"px";
+			if(leftoneNum==-960){
+				//如果滚到最左边则回到右边再次开始滚动
+				imgs[i].style.left=(960*(imgs.length-1))+"px";
+			}
+			if(leftoneNum==0){
+				clearInterval(int);//暂停滚动
+				setTimeout(function(){
+					//恢复滚动
+					int = setInterval(leftmove,10);
+				},3000);
+			}
+		}
+	}
+	var int = setInterval(leftmove,10);
+	var myCarousel=document.getElementById("myCarousel");
+</script>
+</html>

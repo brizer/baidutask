@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+<style type="text/css">
+body {margin:0;}
+.father {
+	display: inline-block;
+	width:200px;
+	height:400px;
+	margin:0 100px;
+	border:1px solid black;
+}
+.item {
+	/*position:relative;*/
+	display: block;
+	height:40px;
+	width:200px;
+	background-color: red;
+	border:1px solid black;
+}
+.absolute {position:absolute;
+}
+</style>
+	</head>
+	<body>
+		<div id="container">
+			<div class="father" id="divleft">
+				<div class="item" draggable="true"></div>
+				<div class="item" draggable="true"></div>
+				<div class="item" draggable="true"></div>
+				<div class="item" id='test' draggable="true"></div>
+			</div>
+			<div class="father" id="divright">
+				<div class="item" draggable="true"></div>
+				<div class="item" draggable="true"></div>
+				<div class="item" draggable="true"></div>
+			</div>
+		</div>
+	</body>
+<script type="text/javascript">
+	var container=document.getElementById("container");
+	var items=document.getElementsByClassName('item');
+	var mouseX,
+		mouseY,
+		divX,
+		divY,
+		btX,
+		btY;
+	//鼠标按下事件	
+	container.onmousedown=function(event){
+		var e = event||window.event;
+		var target=event.target||event.srcElement;
+		if(target.className=='item'){
+			//获取鼠标点击位置坐标
+			//alert(e.clientX+'---'+e.clientY);
+			//获取目标div距离body距离
+			//alert(target.offsetLeft+'---'+target.offsetTop);
+			mouseX=e.clientX,
+			mouseY=e.clientY,
+			divX=target.offsetLeft,
+			divY=target.offsetTop;
+			btX=mouseX-divX;
+			btY=mouseY-divY;
+		}
+	}
+	//拖动事件
+	container.ondrag=function(event){
+		//使得拖动的元素跟随鼠标移动
+		var e=event||window.event;
+		var target=event.target||event.srcElement;	
+			mouseX=e.clientX;
+			mouseY=e.clientY;
+			target.className='absolute';
+			target.left=mouseX-btX;
+			target.top=mouseY-btY;
+	}
+	//鼠标释放事件
+	container.ondragend=function(event){
+		var e=event||window.event;
+		var target=e.target||e.srcElement;
+		mouseX=e.clientX;
+		mouseY=e.clientY;
+		target.className='absolute item';
+		target.style.left=mouseX-btX+"px";
+		target.style.top=mouseY-btY+"px";
+		var leftnum=target.style.left.replace('px','');
+		
+		if(Number(leftnum)>311&&Number(leftnum)<708){
+			//如果在指定范围内
+			var right=document.getElementById("divright");
+			target.className='item';
+			right.appendChild(target);
+		}
+	}
+</script>
+</html>

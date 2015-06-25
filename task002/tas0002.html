@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	<script src="util.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+	<input type="text" id="number1" />
+	<input type="text" id="number2" />
+	<label class="hehe" id="result">value</label>
+	<input type="button" id="addbtn" value="添加"/>
+	<br />
+	<ul id="list">
+		<li class="listener" id="item1">liuf</li>
+		<li id="item2">seven</li>
+		<li id="item3">hehe</li>
+	</ul>
+	<button id="btn">Change</button>
+	</body>
+	<script type="text/javascript">
+		function $(id){
+			return document.getElementById(id);
+		}
+		function add(num1,num2){
+			return num1+num2;
+		}
+		function renderResult(result){
+			$("result").innerHTML=result;
+		}
+		function addEventHandle(){
+			var num1=$("number1").value;
+			var num2=$("number2").value;
+			var result=add(num1,num2);
+			renderResult(result);
+		}
+		function initEvent(){
+			$("addbtn").addEventListener("click",addEventHandle,false);
+		}
+		initEvent();//简单的js操作示例
+		//验证深度拷贝函数的使用
+		// 测试用例：
+		var srcObj = {
+		    a: 1,
+		    b: {
+		        b1: ["hello", "hi"],
+		        b2: "JavaScript"
+		    }
+		};
+		var abObj = srcObj;//引用传递
+		var tarObj = cloneObject(srcObj);
+		
+		srcObj.a = 2;
+		srcObj.b.b1[0] = "Hello";
+		
+		console.log(abObj.a);//2
+		console.log(abObj.b.b1[0]);//Hello,说明普通的=是一种引用传递
+		
+		console.log(tarObj.a);      // 1
+		console.log(tarObj.b.b1[0]);    // "hello",说明我们定义的深拷贝是值传递
+		//验证数组去重函数的使用
+		var arr=[2,3,4,2,4,5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3];
+		for(var i=0;i<10000000;i++){//为了分辨出花费时间的区别，特此增加数组的长度
+			arr.push(3);
+		}
+		var time1=Date.now();
+		var n1=uniqArray1(arr);
+		var time2=Date.now();
+		console.log(n1);//2,3,4,5说明第一种去重成功
+		console.log(time2-time1);//218
+		
+		time1=Date.now();
+		var n2=uniqArray2(arr);
+		time2=Date.now();
+		console.log(n2);//2,3,4,5说明第二种去重成功
+		console.log(time2-time1);//63,说明对象下标的引用要比indexOf搜索快得多
+		
+		time1=Date.now();
+		var n3=uniqArray3(arr);
+		time2=Date.now();
+		console.log(n3);//2,3,4,5说明第三种去重成功
+		console.log(time2-time1);//203，说明sort方法使用快排，比indexOf快，但是没有哈希快
+		
+//		去除首尾缩进示例
+// 		使用示例
+		var str = '   hi!  ';
+		str = trim(str);
+		console.log(str); // 'hi!'
+		
+//		each示例
+		var arr = ['java', 'c', 'php', 'html'];
+		function output(item, index) {//两个参数
+		    console.log(index + ': ' + item)
+		}
+		function outputAgain(item){//一个参数
+			console.log(item);
+		}
+		each(arr, output);  // 0:java, 1:c, 2:php, 3:html
+		each(arr,outputAgain);//java, c, php, html
+		
+//		获得对象第一层数量示例
+		// 使用示例
+		var obj = {
+		    a: 1,
+		    b: 2,
+		    c: {
+		        c1: 3,
+		        c2: 4
+		    }
+		};
+		console.log(getObjectLength(obj)); // 3
+//
+//
+//		DOM练习
+//
+//
+		//class相关操作
+		var result=document.querySelector("#result");//hehe
+		addClass(result,"haha");//hehe haha，成功添加class
+		removeClass(result,"hehe");//haha,成功删除class
+		//node相关操作
+		var addBtn=document.querySelector("#addbtn");
+		var boolValue=isSiblingNode(result,addBtn);//判断是否同一父节点
+		console.log(boolValue);//true
+		//位置
+		var pos=getPosition(result);//获得元素距离浏览器窗口位置
+		console.log(pos);//338 12 
+		
+//事件练习
+		var addBtn=$mi('#addbtn');
+		function a(){
+			alert(123);
+		}
+		addEvent(addBtn,"click",a);//添加绑定事件
+//代理联系
+	function clickListener(event){
+		console.log(event);
+	}
+	//最笨的方法
+//	addClickEvent($mi('#item1'),clickListener);
+//	addClickEvent($mi('#item2'),clickListener);
+//	addClickEvent($mi('#item3'),clickListener);	
+	//稍微好些的方法
+//	each($mini("#list").getElementsByTagName('li'),function(li){
+//		addClickEvent(li,clickListener);
+//	});
+	//一种特殊情况
+	function renderList(){
+		$mi("#list").innerHTML="<li class='listener' id='new_item'>new item</li>";
+	}
+	addClickEvent($mi("#btn"),renderList);
+	//会发现上面的方法不能在新出现元素身上奏效。
+	//所以需要用到事件冒泡，给其父元素添加监听
+	//addClickEvent($mi("#list"),clickListener);
+	//但是单纯用冒泡只能默认父元素下所有子元素都影响，如何指定固定元素呢？
+	//代理，监听list中指定class为listener的元素触发对应事件
+    delegate('list', 'onclick', 'listener', function(){
+        console.log(this);    
+    });
+//BOM相关
+	setCookie('abc',"123");
+	var value=getCookie('abc');
+	console.log(value);//123,说明cookie获取成功
+	</script>
+</html>

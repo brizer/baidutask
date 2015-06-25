@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+	<textarea id="textip" name="textip" rows="10" cols="20"></textarea>
+	<br />
+	<label for="okbtn" id="oklab" style="color:red;"></label>
+	<br />
+	<input type="button" name="okbtn" id="okbtn" value="确认" />
+	<br />
+	<p id="textp">这里会显示爱好</p>
+	</body>
+<script type="text/javascript">
+//数组去重
+	function uniqArray(arr){
+		var n={},
+			r=[];
+		for(var i=0;i<arr.length;i++){
+			if(n[arr[i]]==null){
+				//如果哈希表中没有，则添加到哈希表，且进入临时数组
+				n[arr[i]]=true;
+				r.push(arr[i]);
+			}
+		}
+		return r;
+	}
+	var okbtn=document.getElementById("okbtn");
+	okbtn.onclick=function(){
+		var textip=document.getElementById("textip");
+		var textvalue=textip.value;
+		//将值转化为数组
+		var textarray=textvalue.split(",");
+		var oklab=document.getElementById("oklab");
+		if(textarray.length>10){
+			oklab.innerHTML="输入不能多于10个！";
+			return null;
+		}else{
+			oklab.innerHTML="";
+		}
+		//将数组去重
+		textarray=uniqArray(textarray);
+		//在按钮下方的段落显示处理后的爱好
+		var textp=document.getElementById("textp");
+		var htmlstring="";
+		for(var i=0;i<textarray.length;i++){
+		//构建checkbox
+			htmlstring+="<br>"+"<input type='checkbox' name='interest'>"+textarray[i];
+		}
+		textp.innerHTML=htmlstring;
+	}
+</script>
+</html>

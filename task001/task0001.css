@@ -1,0 +1,103 @@
+.color-blue {
+	color:blue;
+}
+.color-yellow {
+	color:yellow;
+}
+.background-color-blue {
+	background-color: blue;
+}
+.background-color-black {
+	background-color:black;
+}
+.background-color-red {
+	background-color:red;
+}
+.background-color-yellow {
+	background-color:yellow;
+}
+.height-60 {
+	height:60px;
+}
+.border-color-red {
+	border: 2px solid #ff0000;
+}
+.left {
+	float:left;
+}
+.right {
+	float:right;
+}
+.font-size-20{
+	font-size: 20px;
+}
+.line-height-1_5{
+	line-height: 1.5;
+}
+.width-1 {
+	width:100%;
+}
+.width-auto {
+	width:auto;
+}
+.width-300 {
+	width:300px;
+}
+.width-960 {
+	width:960px;	
+}
+.width-100 {
+	width:100%;
+}
+.inline-block {
+	display: inline-block;
+}
+/*第一种水平居中方式*/
+.center-1 {
+	margin: 0 auto;
+}
+/*第二种水平居中方式*/
+.center-2 {
+	position:absolute;
+	left:50%;
+	margin-left:-480px;
+}
+.margin-left-301 {
+	margin-left:301px;
+}
+.box {
+	display: box;
+	display: -webkit-box;
+}
+.flex {
+	-webkit-box-flex: 1;
+}
+/*第一种三列布局方式*/
+.margin-left--1 {
+	margin-left:-100%;
+}
+.margin-left--300 {
+	margin-left:-300px;
+}
+.body {
+	padding:0 300px 0 300px;
+	min-width: 300px;
+}
+.relative {
+	position:relative;
+}
+.left-300 {
+	left:300px;
+}
+.right-300 {
+	right:300px;
+}
+/*第二种三列布局方式*/
+/*浮动布局*/
+.son {
+	float:left;
+	width:300px;
+	height: 200px;
+	background-color:blue;
+	margin:10px;
+}

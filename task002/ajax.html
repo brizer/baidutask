@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+<script src="util.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<input type="text" name="input" id="input" value="" />
+	</body>
+<script type="text/javascript">
+//	var xmlhttp;
+//	if(window.XMLHttpRequest){
+//		xmlhttp=new XMLHttpRequest();
+//	}else{
+//		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+//	}
+//	xmlhttp.onreadystatechange=function(){
+//		if(xmlhttp.readyState==4&&xmlhttp.status==200){//如果请求成功，执行以下函数
+//			document.getElementById("input").value=xmlhttp.responseText;
+//		}
+//	}
+//	xmlhttp.open("GET","test002.txt",true);
+//	xmlhttp.setRequestHeader("Content-type","application/liuf");//设置HTTP头
+//	xmlhttp.send();
+	ajax("test002.txt",{
+		type:"GET",
+		data:{
+			name:"liuf",
+			age:23
+		},
+		onsuccess:function(responseText,xhr){
+			document.getElementById("input").value=responseText;
+		},
+		onfail:function(){
+			//document.write("fail");
+		}
+	});
+</script>
+</html>
